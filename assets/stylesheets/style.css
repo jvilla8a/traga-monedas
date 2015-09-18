@@ -1,0 +1,18 @@
+/* 
+    Document   : style
+    Created on : 28/08/2015, 07:11:01 PM
+    Author     : 5-09
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root {display: block;}
+#error{color: red;}
+h2{
+    color: #009999;
+    text-decoration: underline;
+}
+input[type=text]{
+    background: #000;
+    color: #FFF;
+}
