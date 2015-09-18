@@ -12,6 +12,7 @@ and open the template in the editor.
         <title></title>
         <link rel="stylesheet" type="text/css" href="<?php echo $rutaStyleSheets;?>/style.css"/>
         <script type="text/javascript" src="<?php echo $rutaJS; ?>/functions.js"></script>
+        <?php echo $bootstrap; ?>
     </head>
     <body>
         <h2>Agenda</h2>

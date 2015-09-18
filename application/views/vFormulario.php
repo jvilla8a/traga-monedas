@@ -12,9 +12,47 @@ and open the template in the editor.
         <title></title>
         <link rel="stylesheet" type="text/css" href="<?php echo $rutaStyleSheets;?>/style.css"/>
         <script type="text/javascript" src="<?php echo $rutaJS; ?>/functions.js"></script>
+        <?php echo $bootstrap; ?>
     </head>
     <body>
-    	<h2>Datos Personales</h2>
+
+        <div class="container">
+            <div class="text-center">
+                <h1>Iniciar Sesión</h1>
+                <hr>
+                <div class="col-sm-8 col-sm-offset-2">
+                    <?php 
+                        $userArray = array(     'name'          =>  'txtId',
+                                                'id'            =>  'txtId',
+                                                'type'          =>  'text',
+                                                'required'      =>  'required',
+                                                'placeholder'   =>  'Usuario');
+                        $passArray = array(     'name'          =>  'txtPass',
+                                                'id'            =>  'txtPass',
+                                                'type'          =>  'password',
+                                                'required'      =>  'required',
+                                                'placeholder'   =>  'Contraseña');
+                        $enviarArray = array(   'name'          =>  'btnSubmit',
+                                                'id'            =>  'btnSubmit',
+                                                'value'         =>  'Iniciar Sesión');
+                        
+                        echo form_open('formulario/agenda');
+                        echo form_input($userArray);
+                        echo '<p></p>';
+                        echo form_input($passArray);
+                        echo '<p></p>';
+                        echo form_submit($enviarArray);
+                        echo form_close();
+                        echo '<div id="error">';
+                        echo validation_errors();
+                        echo '</div>'
+                    ?>
+                </div>
+            </div>
+        </div>
+
+
+    	<!-- <h2>Datos Personales</h2>
         <img width="150" height="150" src="<?php echo $rutaImages?>/img1.jpg"/>
     	<div id="error">
 	        <?php
@@ -32,6 +70,6 @@ and open the template in the editor.
         <input type="submit" value="Ver Datos"/>
         <input type="button" value="Prueba JavaScript" onclick="saludo()" />
         <input type="reset" value="Restablecer"/>
-        <? echo form_close(); ?>
+        <? echo form_close(); ?> -->
     </body>
 </html>

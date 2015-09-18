@@ -13,6 +13,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author 5-09
  */
 class formulario extends CI_Controller {
+
+    private $sql;
+    public $link;
+
     public function __construct(){
     	parent::__construct();
     	$this->load->helper(array("form", "url"));
@@ -20,10 +24,24 @@ class formulario extends CI_Controller {
     }
 
     public function index(){
-    	$this->form_validation->set_rules('txtNombre', 'Nombre', 'trim|required|min_length[3]|max_length[30]');
-    	$this->form_validation->set_rules('txtEdad', 'Edad', 'required|numeric|greater_than[0]');
-    	$this->form_validation->set_rules('txtCorreo', 'Correo', 'required|valid_email');
-        $this->form_validation->set_message('required', 'El campo %s no puede estar vacio');
+
+        $this->form_validation->set_rules (
+            'txtId',
+            'Usuario',
+            'trim|required|max_length[30]'
+        );
+
+        $this->form_validation->set_rules(
+            'txtPass',
+            'Contraseña',
+            'trim|required|max_length[30]'
+        );
+
+        $this->form_validation->set_message(
+            'required',
+            'El campo %s no puede estar vacio'
+        );
+
 
     	if ($this->form_validation->run()==FALSE) {
             $this->load->view("vFormulario");
@@ -53,6 +71,52 @@ class formulario extends CI_Controller {
             );
             $this->load->view("vAgenda", $datos);
         }
+    }
+
+    public function asignarConsulta($consulta)
+    {
+        $this->sql=mysqli_query($this->link, $consulta) or die(mysqli_error());
+    }
+
+    public function devolverConsulta()
+    {
+        return $this->sql;
+    }
+
+    public function devolverTotalRegistros()
+    {
+        return mysqli_num_rows($this->sql);
+    }
+
+    public function liberarConsulta()
+    {
+        mysqli_free_result($this->sql);
+    }
+
+    public function mostrarDatos($campos)
+    {
+        $tabla="<table border='1'><tr>";
+        for($i=0;$i<count($campos);$i++)
+        {
+            $tabla.="<th>".ucwords($campos[$i])."</th>";
+        }
+        $tabla.="</tr>";
+        
+        
+        while($f=  mysqli_fetch_array($this->devolverConsulta()))
+        {
+            $tabla.= "<tr>";
+            for($i=0;$i<count($campos);$i++)
+            {
+                $tabla.= "<td>".$f[$campos[$i]]."</td>";
+            }    
+            $usr=$f[$campos[0]];
+            $nom=$f[$campos[1]];
+            $tabla.="</tr>";
+        }
+       
+        $tabla.="</table>";
+        return $tabla;
     }
 }
 
